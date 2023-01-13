@@ -6,11 +6,11 @@ import pytest
 
 
 @pytest.mark.bigdata
-def test_dummy_reg():
+def test_dummy_reg(rtdata, return_data=False):
     assert 1 > 0
 
 
 @pytest.mark.bigdata
 @pytest.mark.soctests
-def test_dummy_soctest_reg():
+def test_dummy_soctest_reg(rtdata, return_data=False):
     assert 1 > 0
