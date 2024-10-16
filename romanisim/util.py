@@ -210,8 +210,8 @@ def add_more_metadata(metadata):
     effexptime = parameters.read_time * (
         np.mean(read_pattern[-1]) - np.mean(read_pattern[0]))
     metadata['exposure']['effective_exposure_time'] = effexptime
-    metadata['guide_star']['window_xstart'] = 16
-    metadata['guide_star']['window_ystart'] = 16
+    metadata['guide_star']['window_xsize'] = 16
+    metadata['guide_star']['window_ysize'] = 16
     if 'window_xstart' in metadata['guide_star']:
         metadata['guide_star']['window_xstop'] = (
             metadata['guide_star']['window_xstart'])
@@ -500,19 +500,17 @@ def update_photom_keywords(im, gain=None):
         im['meta']['photometry']['pixelarea_steradians'] = area.to(u.sr)
         im['meta']['photometry']['pixelarea_arcsecsq'] = (
             area.to(u.arcsec ** 2))
-        im['meta']['photometry']['conversion_megajanskys'] = (gain * (
+        im['meta']['photometry']['conversion_megajanskys'] = (gain *
             3631 /
             bandpass.get_abflux(im.meta['instrument']['optical_element']) /
             10 ** 6 /
-            im['meta']['photometry']['pixelarea_steradians']) * u.MJy).value
+            im['meta']['photometry']['pixelarea_steradians']).value
         im['meta']['photometry']['conversion_microjanskys'] = (
             im['meta']['photometry']['conversion_megajanskys'] *
             u.MJy / u.sr).to(u.uJy / u.arcsec ** 2).value
 
-    im['meta']['photometry']['conversion_megajanskys_uncertainty'] = (
-        0 * u.MJy / u.sr).value
-    im['meta']['photometry']['conversion_microjanskys_uncertainty'] = (
-        0 * u.uJy / u.arcsec ** 2).value
+    im['meta']['photometry']['conversion_megajanskys_uncertainty'] = 0
+    im['meta']['photometry']['conversion_microjanskys_uncertainty'] = 0
 
 
 def merge_dicts(a, b):
